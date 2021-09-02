@@ -63,7 +63,7 @@ public class FlatMapTest {
 
     @Test
     public void whenSeveralEmptyAndNotEmpty() {
-        Iterator<Iterator<?>> it = List.of(
+        Iterator<Iterator<? extends Object>> it = List.of(
                 List.of().iterator(),
                 List.of().iterator(),
                 List.of().iterator(),

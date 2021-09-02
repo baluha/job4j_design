@@ -20,9 +20,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
                 index++;
             }
         }
-        if (data[index] % 2 == 0) {
-            rsl = true;
-        }
+        rsl = data[index] % 2 == 0;
         return rsl;
     }
 

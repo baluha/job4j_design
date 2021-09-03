@@ -1,4 +1,4 @@
-package ru.job4j.generics;
+package ru.job4j.generic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,8 +43,8 @@ public class Generics {
         }
     }
 
-    public void printLowerBoundedWildCard(List<? super Predator> list) {
-        for (Iterator<? super Predator> it = list.iterator(); it.hasNext();) {
+    public void printLowerBoundedWildCard(List<? super Tiger> list) {
+        for (Iterator<? super Tiger> it = list.iterator(); it.hasNext();) {
             Object next = it.next();
             System.out.println("Текущий элемент: " + next);
         }

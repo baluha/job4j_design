@@ -22,7 +22,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-        if(size == container.length) {
+        if (size == container.length) {
             grow(container.length * 2);
         }
         container[size++] = value;
@@ -31,7 +31,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-        if(exceptionPred.test(index, size)) {
+        if (exceptionPred.test(index, size)) {
             throw new IndexOutOfBoundsException();
         }
         T val = container[index];
@@ -43,13 +43,12 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        if(exceptionPred.test(index, size)) {
+        if (exceptionPred.test(index, size)) {
             throw new IndexOutOfBoundsException();
         }
         T val = container[index];
-        for (int i = index; i < size; i++) {
-            container[i] = container[i + 1];
-        }
+        if (size - index >= 0) System.arraycopy(container, index + 1,
+                container, index, size - index);
         size--;
         modCount++;
         return val;
@@ -57,7 +56,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if(exceptionPred.test(index, size)) {
+        if (exceptionPred.test(index, size)) {
             throw new IndexOutOfBoundsException();
         }
         return container[index];
@@ -76,9 +75,9 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
-            int exp = modCount;
+            final int exp = modCount;
             int position;
 
             @Override
@@ -88,10 +87,10 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public T next() {
-                if(modCount != exp) {
+                if (modCount != exp) {
                     throw new ConcurrentModificationException();
                 }
-                if(!hasNext()) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return container[position++];

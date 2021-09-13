@@ -28,9 +28,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-        if (Objects.checkIndex(index, size) == -1) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
         T val = container[index];
         container[index] = newValue;
         return val;
@@ -39,9 +37,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        if (Objects.checkIndex(index, size) == -1) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
         T val = container[index];
             System.arraycopy(container, index + 1,
                     container, index, size - index - 1);
@@ -53,9 +49,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (Objects.checkIndex(index, size) == -1) {
-            throw new IndexOutOfBoundsException();
-        }
+        Objects.checkIndex(index, size);
         return container[index];
     }
 

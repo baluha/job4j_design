@@ -13,9 +13,6 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int modCount;
 
-    private final BiPredicate<Integer, Integer> exceptionPred =
-            (idx, con) -> (idx >= con || idx <= -1);
-
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
@@ -31,24 +28,24 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-        if (exceptionPred.test(index, size)) {
+        if (Objects.checkIndex(index, size) == -1) {
             throw new IndexOutOfBoundsException();
         }
         T val = container[index];
         container[index] = newValue;
-        modCount++;
         return val;
     }
 
 
     @Override
     public T remove(int index) {
-        if (exceptionPred.test(index, size)) {
+        if (Objects.checkIndex(index, size) == -1) {
             throw new IndexOutOfBoundsException();
         }
         T val = container[index];
-        if (size - index >= 0) System.arraycopy(container, index + 1,
-                container, index, size - index);
+            System.arraycopy(container, index + 1,
+                    container, index, size - index - 1);
+            container[size - 1] = null;
         size--;
         modCount++;
         return val;
@@ -56,7 +53,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (exceptionPred.test(index, size)) {
+        if (Objects.checkIndex(index, size) == -1) {
             throw new IndexOutOfBoundsException();
         }
         return container[index];

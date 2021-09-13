@@ -1,4 +1,4 @@
-package ru.job4j.generic;
+package ru.job4j.generics;
 
 public class UserStore implements Store<User> {
 

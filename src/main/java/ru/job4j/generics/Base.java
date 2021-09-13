@@ -1,4 +1,4 @@
-package ru.job4j.generic;
+package ru.job4j.generics;
 
 public abstract class Base {
     private final String id;
@@ -13,8 +13,8 @@ public abstract class Base {
 
     @Override
     public String toString() {
-        return "Base{" +
-                "id='" + id + '\'' +
-                '}';
+        return "Base{"
+                + "id='" + id + '\''
+                + '}';
     }
 }

@@ -18,11 +18,10 @@ public class SimpleLinkedList<E> implements List<E> {
         Node<E> l = last;
         Node<E> newNode = new Node<>(l, value, null);
         last = newNode;
-        if (first == null) {
+        if (first == null && size == 0) {
             first = newNode;
         } else {
-            this.last.prev = first;
-            first.next = last;
+            last.prev.next = last;
         }
         size++;
         modCount++;
@@ -34,8 +33,7 @@ public class SimpleLinkedList<E> implements List<E> {
         Node<E> nodeRsl;
         if (index == 0) {
             return first.item;
-        }
-        else if(index == size - 1) {
+        } else if (index == size - 1) {
             return last.item;
         } else {
             nodeRsl = first;
@@ -87,7 +85,7 @@ public class SimpleLinkedList<E> implements List<E> {
         Node<E> next;
         Node<E> prev;
 
-        Node(Node<E> prev,E element, Node<E> next) {
+        Node(Node<E> prev, E element, Node<E> next) {
             this.prev = prev;
             this.item = element;
             this.next = next;

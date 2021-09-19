@@ -1,5 +1,6 @@
 package ru.job4j.collection;
 
+import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -11,13 +12,12 @@ public class ForwardLinked<T> implements Iterable<T> {
         Node<T> newNode = new Node(value, null);
         if (head == null) {
             head = newNode;
-            size++;
         } else {
             Node<T> tmp = head;
             head = newNode;
             head.next = tmp;
-            size++;
         }
+        size++;
     }
 
     public void add(T value) {
@@ -49,6 +49,24 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public boolean revert() {
+        int count = 1;
+        if (size <= 1) {
+            return false;
+        }
+        Node<T> a = head;
+        Node<T> b = head.next;
+        Node<T> c;
+        for (int i = count; i < size; i++) {
+            c = head;
+            head = b;
+            b = b.next;
+            head.next = c;
+        }
+        a.next = null;
+        return true;
     }
 
     @Override

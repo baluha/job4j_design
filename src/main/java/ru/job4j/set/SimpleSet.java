@@ -9,10 +9,8 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean add(T value) {
-        for (T t : set) {
-            if (Objects.equals(t, value)) {
+            if (this.contains(value)) {
                 return false;
-            }
         }
         set.add(value);
         return true;

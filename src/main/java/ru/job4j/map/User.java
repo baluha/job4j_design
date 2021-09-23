@@ -14,6 +14,7 @@ public class User {
         this.birthday = birthday;
     }
 
+
     public static void main(String[] args) {
 
         User user1 = new User("Ivan", 2,
@@ -28,6 +29,12 @@ public class User {
         for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry.getKey().hashCode());
         }
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
 

@@ -25,7 +25,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
             table[index] = new MapEntry<>(key, value);
             modCount++;
             count++;
-            if ((float) count/capacity >= LOAD_FACTOR) {
+            if ((float) count / capacity >= LOAD_FACTOR) {
                 expand();
             }
             return true;
@@ -66,7 +66,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         MapEntry<K, V> map = table[indexFor(hash(key.hashCode()))];
         boolean rsl = map != null;
-        if(map != null) {
+        if (map != null) {
             modCount++;
         }
         table[indexFor(hash(key.hashCode()))] = null;
@@ -117,11 +117,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             MapEntry<?, ?> mapEntry = (MapEntry<?, ?>) o;
-            return Objects.equals(key, mapEntry.key) &&
-                    Objects.equals(value, mapEntry.value);
+            return Objects.equals(key, mapEntry.key)
+                    && Objects.equals(value, mapEntry.value);
         }
 
         @Override

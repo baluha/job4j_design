@@ -19,7 +19,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) count / capacity >= loadFactor) {
+        if (count >= capacity * loadFactor) {
             expand();
         }
         int hash = hash(key.hashCode());

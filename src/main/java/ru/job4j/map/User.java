@@ -1,7 +1,11 @@
 package ru.job4j.map;
 
-import java.util.*;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Map.Entry;
 public class User {
 
     private String name;
@@ -22,13 +26,14 @@ public class User {
         User user2 = new User("Ivan", 2,
                 new GregorianCalendar(1992, Calendar.MAY, 24));
 
-        Map<User, Object> map = new HashMap<>();
+        HashMap<User, Object> map = new HashMap<>();
 
         map.put(user1, new Object());
         map.put(user2, new Object());
-        for (Map.Entry entry : map.entrySet()) {
+
+/*        for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry.getKey().hashCode());
-        }
+        }*/
     }
 
     @Override

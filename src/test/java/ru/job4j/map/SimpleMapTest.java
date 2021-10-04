@@ -13,8 +13,8 @@ public class SimpleMapTest {
     @Test
     public void testPut() {
         SimpleMap<String, String> simpleMap = new SimpleMap<>();
-        assertTrue(simpleMap.put("abc", "abc"));
-        assertFalse(simpleMap.put("abc", "abc"));
+        assertTrue(simpleMap.put("abcd", "abc"));
+        assertFalse(simpleMap.put("abcd", "abc"));
         assertTrue(simpleMap.put("a", "ac"));
         assertTrue(simpleMap.put("b", "ac"));
         assertFalse(simpleMap.put("a", "123"));

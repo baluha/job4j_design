@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
-    private static final float LOAD_FACTOR = 0.75f;
+    private final float loadFactor = 0.75f;
 
-    private int capacity = 8;
+    private static int capacity = 8;
 
     private int count = 0;
 
@@ -19,15 +19,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
+        if ((float) count / capacity >= loadFactor) {
+            expand();
+        }
         int hash = hash(key.hashCode());
         int index = indexFor(hash);
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
             modCount++;
             count++;
-            if ((float) count / capacity >= LOAD_FACTOR) {
-                expand();
-            }
             return true;
         }
         return false;
@@ -57,19 +57,21 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         MapEntry<K, V> map = table[indexFor(hash(key.hashCode()))];
-        V rsl;
-        rsl = map == null ? null : map.value;
+        V rsl = null;
+        if (map != null && Objects.equals(map.key, key)) {
+            rsl = map.value;
+        }
         return rsl;
     }
 
     @Override
     public boolean remove(K key) {
         MapEntry<K, V> map = table[indexFor(hash(key.hashCode()))];
-        boolean rsl = map != null;
-        if (map != null) {
+        boolean rsl = map != null && Objects.equals(map.key, key);
+        if (map != null && Objects.equals(map.key, key)) {
             modCount++;
+            table[indexFor(hash(key.hashCode()))] = null;
         }
-        table[indexFor(hash(key.hashCode()))] = null;
         return rsl;
     }
 

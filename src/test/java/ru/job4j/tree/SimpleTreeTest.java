@@ -18,6 +18,19 @@ public class SimpleTreeTest {
                 tree.findBy(6).isPresent(),
                 is(true)
         );
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void whenTreeIsBinary() {
+        Tree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(4, 5);
+        tree.add(4, 6);
+        tree.add(6, 6);
+        tree.add(6, 6);
+        assertTrue(tree.isBinary());
     }
 
     @Test

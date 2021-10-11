@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.FileInputStream;
-import java.util.Arrays;
 
 public class EvenNumberFile {
     public static void main(String[] args) {
@@ -12,9 +11,7 @@ public class EvenNumberFile {
                 st.append((char) read);
             }
             String[] numbers = st.toString().split(System.lineSeparator());
-/*            Arrays.stream(numbers)
-                    .filter(n -> Integer.parseInt(n) % 2 == 0)
-                    .forEach(n -> System.out.println(n + " является четным"));*/
+
             for (String number : numbers) {
                 if (Integer.parseInt(number) % 2 == 0) {
                     System.out.println(number + " является четным");

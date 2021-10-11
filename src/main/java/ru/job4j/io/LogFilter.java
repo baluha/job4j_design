@@ -14,6 +14,7 @@ public class LogFilter {
                     .filter(st -> "404".equals(st.split(" ")[st.split(" ").length - 2]))
                     .map(st -> st + System.lineSeparator())
                     .collect(Collectors.toList());
+            bufferedReader.close();
             return lst;
         } catch (Exception e) {
             e.printStackTrace();

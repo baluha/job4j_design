@@ -11,7 +11,7 @@ public class LogFilter {
         List<String> lst = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("log.txt"))) {
             lst = bufferedReader.lines()
-                    .filter(st -> st.contains(404 + ""))
+                    .filter(st -> "404".equals(st.split(" ")[st.split(" ").length - 2]))
                     .map(st -> st + System.lineSeparator())
                     .collect(Collectors.toList());
             return lst;

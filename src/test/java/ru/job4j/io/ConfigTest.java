@@ -11,7 +11,7 @@ public class ConfigTest {
         String path = "./data/with_comments.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"),is("Roman"));
+        assertThat(config.value("name"), is("Roman"));
     }
 
     @Test(expected = IllegalArgumentException.class)

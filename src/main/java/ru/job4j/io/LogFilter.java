@@ -11,7 +11,6 @@ public class LogFilter {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("log.txt"))) {
             lst = bufferedReader.lines()
                     .filter(st -> "404".equals(st.split(" ")[st.split(" ").length - 2]))
-                    .map(st -> st + System.lineSeparator())
                     .collect(Collectors.toList());
             bufferedReader.close();
             return lst;
@@ -31,7 +30,7 @@ public class LogFilter {
                 new BufferedOutputStream(
                         new FileOutputStream(file)))) {
             for (String st: log) {
-                out.write(st);
+                out.println(st);
             }
                 } catch (Exception e) {
             e.printStackTrace();

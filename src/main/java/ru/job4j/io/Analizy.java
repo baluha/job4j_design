@@ -8,10 +8,7 @@ public class Analizy {
     public void unavailable(String source, String target) {
         StringBuilder st = new StringBuilder();
         List<String> lst = new ArrayList<>();
-        try (
-                BufferedReader in = new BufferedReader(new FileReader(source));
-                PrintWriter out = new PrintWriter(new FileOutputStream(target))
-        ) {
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             in.lines().forEach(l -> {
                 String[] str = l.split(" ");
                 if ((str[0].equals("400") || str[0].equals("500")) && lst.size() == 0) {
@@ -22,10 +19,15 @@ public class Analizy {
                     lst.clear();
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             out.write(st.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) {

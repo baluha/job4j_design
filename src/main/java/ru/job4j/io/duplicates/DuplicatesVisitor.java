@@ -9,16 +9,30 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    Map<FileProperty, Path> map = new HashMap<>();
+    Map<FileProperty,List <Path>> map = new HashMap<>();
 
     @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-         FileProperty fileProperty = new FileProperty(file.toFile().length(), file.getFileName().toString());
-         if (map.containsKey(fileProperty)) {
-             System.out.println(file);
+        FileProperty fileProperty = new FileProperty(file.toFile().length(), file.getFileName().toString());
+        if (!map.containsKey(fileProperty)) {
+            List<Path> lst = new ArrayList<>();
+            lst.add(file);
+             map.put(fileProperty, lst);
+         } else {
+            List<Path> lstContains = new ArrayList<>(map.get(fileProperty));
+            lstContains.add(file);
+            map.put(fileProperty, lstContains);
          }
-         map.put(fileProperty, file);
          return super.visitFile(file, attrs);
+        }
+
+        public List<Path> getDuplicates() {
+            List<Path> dup = new ArrayList<>();
+            map.values()
+                .stream()
+                .filter(l -> l.size() > 1)
+                .forEach(dup::addAll);
+            return dup;
         }
     }
 

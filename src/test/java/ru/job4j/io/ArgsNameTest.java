@@ -29,4 +29,25 @@ public class ArgsNameTest {
     public void whenWrongSomeArgument() {
         ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "-Xmx="});
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongKeyArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"=UTF-8", "-Xmx=512"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongDefArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"enconding=UTF-8", "-Xmx=512"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongEqualsArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"-enconding--UTF-8", "-Xmx=512"});
+    }
+
+    @Test
+    public void whenEqualsMoreThenOne() {
+        ArgsName jvm = ArgsName.of(new String[] {"-enconding==UTF-8", "-Xmx=512"});
+        assertThat(jvm.get("enconding"), is("UTF-8"));
+    }
 }

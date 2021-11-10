@@ -16,7 +16,12 @@ public class ArgsName {
 
     private void parse(String[] args) {
         Map<String, String> map = new HashMap<>();
-        map = Arrays.stream(args).collect(Collectors
+        map = Arrays.stream(args).map(s -> {
+            if (s.split("=").length < 2) {
+                throw new IllegalArgumentException("There is no one arguments found!");
+            }
+            return s;
+        }).collect(Collectors
                 .toMap(k -> {
                     if (k.indexOf("-") != 0) {
                         throw new IllegalArgumentException("There is no one arguments found!");
@@ -29,12 +34,6 @@ public class ArgsName {
 
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
-        Arrays.stream(args).forEach(s -> {
-            String[] st = s.split("=");
-            if (st.length < 2) {
-                throw new IllegalArgumentException("There is no one arguments found!");
-            }
-        });
         names.parse(args);
         return names;
     }

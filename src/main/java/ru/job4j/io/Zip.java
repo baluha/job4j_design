@@ -8,7 +8,7 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     public static void packFiles(List<File> sources, File target) throws FileNotFoundException {
-        try(ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (File path : sources) {
                 zipOutputStream.putNextEntry(new ZipEntry(path.toString()));
                 try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(path.toString()))) {

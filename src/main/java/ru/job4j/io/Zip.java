@@ -1,7 +1,10 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -31,10 +34,21 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
-        packSingleFile(
-                new File("./pom.xml"),
-                new File("./pom.zip")
-        );
+    public static void main(String[] args) throws IOException {
+        if (args.length < 3) {
+            throw new IllegalArgumentException("Invalid Arguments");
+        }
+        ArgsName argsName = ArgsName.of(args);
+        Path root = Path.of(argsName.get("d"));
+        if (!Files.exists(root)) {
+           throw new IllegalArgumentException("folder does not exist");
+        }
+        String extent = argsName.get("e");
+        File target = new File(argsName.get("o"));
+        List<Path> sourcesTmp = Search.search(root, path ->
+                !path.toFile().getName().endsWith(extent));
+        List<File> sources = sourcesTmp.stream().map(s -> new File(s.toString())).collect(Collectors.toList());
+        packFiles(sources, target);
+
     }
 }

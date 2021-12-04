@@ -29,7 +29,7 @@ public class ConsoleChat {
         boolean botLunch = true;
         while (!OUT.equals(userAnswer)) {
             userAnswer = scanner.nextLine();
-            int randomAnswer = (int) (Math.random() * readPhrases().size());
+            int randomAnswer = (int) (Math.random() * answers.size());
             if (OUT.equals(userAnswer)) {
                 runnable = false;
                 dialogue.add(userAnswer);

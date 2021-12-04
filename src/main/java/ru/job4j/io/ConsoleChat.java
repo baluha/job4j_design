@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,11 +23,11 @@ public class ConsoleChat {
     public void run() throws IOException {
         List<String> dialogue = new ArrayList<>();
         List<String> answers = readPhrases();
-        String userAnswer;
+        String userAnswer = null;
         Scanner scanner = new Scanner(System.in);
         boolean runnable = true;
         boolean botLunch = true;
-        while (runnable) {
+        while (!OUT.equals(userAnswer)) {
             userAnswer = scanner.nextLine();
             int randomAnswer = (int) (Math.random() * readPhrases().size());
             if (OUT.equals(userAnswer)) {

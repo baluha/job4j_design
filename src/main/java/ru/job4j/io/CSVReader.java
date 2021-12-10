@@ -1,18 +1,26 @@
 package ru.job4j.io;
 
-import javax.swing.*;
+
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 
 public class CSVReader {
 
-    public static void handle(ArgsName argsName) throws Exception {
+    public static void handle(ArgsName argsName) throws Exception, IllegalArgumentException {
+        if (argsName.getLength() < 4) {
+           throw new IllegalArgumentException("Not enough arguments, it must be four!");
+        }
         Path data = Path.of(argsName.get("path"));
+        if (!new File(String.valueOf(data)).exists()) {
+           throw new IllegalArgumentException("File does not exist!");
+        }
         String delimiter = argsName.get("delimiter");
+        if (!delimiter.equals(";")) {
+            throw new IllegalArgumentException("Delimiter must be ';'!");
+        }
         List<String> filter = Arrays.asList(argsName.get("filter").split(","));
         String out = argsName.get("out");
 
@@ -21,6 +29,8 @@ public class CSVReader {
             while (scanner.hasNextLine()) {
                 st.add(scanner.next());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         List<Integer> indexes = getIndexes(filter, st, delimiter);
         String properties = getProperties(st, indexes, delimiter);

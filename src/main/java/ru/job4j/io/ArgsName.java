@@ -7,6 +7,10 @@ public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
 
+    public int getLength() {
+        return values.size();
+    }
+
     public String get(String key) throws IllegalArgumentException {
         if (values.get(key) == null) {
             throw new IllegalArgumentException("There is no one arguments found!");

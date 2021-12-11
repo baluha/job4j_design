@@ -18,7 +18,7 @@ public class CSVReader {
            throw new IllegalArgumentException("File does not exist!");
         }
         String delimiter = argsName.get("delimiter");
-        if (!delimiter.equals(";")) {
+        if (!(";").equals(delimiter)) {
             throw new IllegalArgumentException("Delimiter must be ';'!");
         }
         List<String> filter = Arrays.asList(argsName.get("filter").split(","));

@@ -50,7 +50,6 @@ public class Contact implements Serializable {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         final Contact contact = new Contact(123456, "+7 (111) 111-11-11");
-        final Contact contact1 = new Contact(123456, "+7 (111) 111-11-11");
 
         File tempFile = Files.createTempFile(null, null).toFile();
         try (FileOutputStream fos = new FileOutputStream(tempFile);
@@ -65,10 +64,7 @@ public class Contact implements Serializable {
             final Contact contactFromFile = (Contact) ois.readObject();
             System.out.println(contactFromFile);
             System.out.println(contact);
-            System.out.println(contact == contact1);
-            System.out.println(contact.hashCode() == contact1.hashCode());
-            System.out.println(contact.phone.equals(contact1.phone));
-            System.out.println(contact.zipCode == contact1.zipCode);
+            System.out.println(contact.equals(contactFromFile));
         }
     }
 }

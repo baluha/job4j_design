@@ -29,6 +29,26 @@ public class Car {
         this.surnamesPrevOwners = surnamesPrevOwners;
     }
 
+    public boolean isWorking() {
+        return isWorking;
+    }
+
+    public int getNumOfWheels() {
+        return numOfWheels;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public String[] getSurnamesPrevOwners() {
+        return surnamesPrevOwners;
+    }
+
     public Car() {
     }
 

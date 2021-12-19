@@ -1,12 +1,24 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "owner")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Owner {
-    private final String name;
-    private final String phone;
+    @XmlAttribute
+    private String name;
+    @XmlAttribute
+    private String phone;
 
     public Owner(String name, String phone) {
         this.name = name;
         this.phone = phone;
+    }
+
+    public Owner() {
     }
 
     public String getName() {

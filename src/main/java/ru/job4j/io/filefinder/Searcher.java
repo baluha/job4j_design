@@ -22,7 +22,7 @@ public class Searcher {
         if ("mask".equals(param)) {
             listPath = Search.search(root, s -> s.toFile().getName().equals(argsName.get("n")));
         }
-        if("name".equals(param)) {
+        if ("name".equals(param)) {
             listPath = Search.search(root, s -> s.toFile().getName().equals(argsName.get("n")));
         }
         if ("regex".equals(param)) {
@@ -33,7 +33,7 @@ public class Searcher {
         return listPath;
     }
 
-    public static void writeFile (List<Path> paths, ArgsName argsName) {
+    public static void writeFile(List<Path> paths, ArgsName argsName) {
         try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(argsName.get("o"))))) {
             for (Path path: paths) {
                 out.write(String.valueOf(path));

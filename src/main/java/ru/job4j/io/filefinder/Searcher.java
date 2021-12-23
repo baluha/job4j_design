@@ -20,7 +20,13 @@ public class Searcher {
         List<Path> listPath = new ArrayList<>();
         String param = argsName.get("t");
         if ("mask".equals(param)) {
-            listPath = Search.search(root, s -> s.toFile().getName().equals(argsName.get("n")));
+            if (argsName.get("n").startsWith("*")) {
+                String mask = argsName.get("n").substring(argsName.get("n").indexOf("*") + 1);
+                listPath = Search.search(root, s -> s.toFile().getName().endsWith(mask));
+            } else if (argsName.get("n").endsWith("*")) {
+                String mask = argsName.get("n").substring(0, argsName.get("n").indexOf("*"));
+                listPath = Search.search(root, s -> s.toFile().getName().startsWith(mask));
+            }
         }
         if ("name".equals(param)) {
             listPath = Search.search(root, s -> s.toFile().getName().equals(argsName.get("n")));
@@ -37,6 +43,7 @@ public class Searcher {
         try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(argsName.get("o"))))) {
             for (Path path: paths) {
                 out.write(String.valueOf(path));
+                out.write(System.lineSeparator());
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -20,14 +20,11 @@ public class Searcher {
         List<Path> listPath = new ArrayList<>();
         String param = argsName.get("t");
         if ("mask".equals(param)) {
-            if (argsName.get("n").startsWith("*")) {
-                String mask = argsName.get("n").substring(argsName.get("n").indexOf("*") + 1);
-                listPath = Search.search(root, s -> s.toFile().getName().endsWith(mask));
-            } else if (argsName.get("n").endsWith("*")) {
-                String mask = argsName.get("n").substring(0, argsName.get("n").indexOf("*"));
-                listPath = Search.search(root, s -> s.toFile().getName().startsWith(mask));
+            String regex = argsName.get("n").replace("?", ".").replace("*", ".*");
+            Pattern pattern = Pattern.compile(regex);
+                listPath = Search.search(root, s -> pattern.matcher(s.toFile().getName()).find());
             }
-        }
+
         if ("name".equals(param)) {
             listPath = Search.search(root, s -> s.toFile().getName().equals(argsName.get("n")));
         }

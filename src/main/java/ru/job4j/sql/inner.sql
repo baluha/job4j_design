@@ -20,17 +20,17 @@ insert into cats(name, age, shop_id) values('cat3', 3, 2);
 insert into cats(name, age, shop_id) values('cat4', 8, 4);
 insert into cats(name, age, shop_id) values('cat5', 5, 4);
 
-SELECT ct.name, sh.name
+SELECT ct.name as Кличка, sh.name as Магазин
 from cats as ct
 join shop as sh
 on ct.shop_id = sh.id;
 
-SELECT ct.name, ct.age, sh.name
+SELECT ct.name as Имя, ct.age as Возраст, sh.name as Магазин
 from cats as ct
 join shop as sh
 on ct.shop_id = sh.id;
 
-SELECT ct.name, ct.age, sh.name, sh.id
+SELECT ct.name as Кличка, ct.age as Возраст, sh.name as Название_магазина, sh.id as ID
 from cats as ct
 join shop as sh
 on ct.shop_id = sh.id;

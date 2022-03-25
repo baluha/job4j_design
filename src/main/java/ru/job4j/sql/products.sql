@@ -57,7 +57,9 @@ where product.name like '%мороженое%'
 select * from product
 where product.expired_date < CURRENT_TIMESTAMP
 
-select max(price) from product;
+select p.name, p.price
+from product as p
+where price = (select max(price) from product);
 
 select t.name, count(t.name)
 from product p

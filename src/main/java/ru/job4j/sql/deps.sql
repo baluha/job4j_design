@@ -73,3 +73,7 @@ insert into teens(name, gender) values('Ruslan', 'male');
 insert into teens(name, gender) values('Inna', 'female');
 insert into teens(name, gender) values('Olga', 'female');
 insert into teens(name, gender) values('Julia', 'female');
+
+select m.name as male, f.name as female
+from teens m cross join teens f
+where m.gender like 'male' and f.gender like 'female';

@@ -84,3 +84,7 @@ select p.name, t.name
 from product p
 join type as t
 on p.type_id = t.id
+
+select m.name as male, f.name as female
+from teens m cross join teens f
+where m.gender like 'male' and f.gender like 'female';

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ConnectingDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-        Config config = new Config("C:\\projects\\job4j_design\\app.properties");
+        Config config = new Config("./app.properties");
         config.load();
         String url = config.value("hibernate.connection.url");
         String login = config.value("hibernate.connection.username");

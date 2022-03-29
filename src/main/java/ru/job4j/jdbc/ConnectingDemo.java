@@ -12,9 +12,9 @@ public class ConnectingDemo {
         Class.forName("org.postgresql.Driver");
         Config config = new Config("./app.properties");
         config.load();
-        String url = config.value("hibernate.connection.url");
-        String login = config.value("hibernate.connection.username");
-        String password = config.value("hibernate.connection.password");
+        String url = config.value("jdbc.url");
+        String login = config.value("jdbc.username");
+        String password = config.value("jdbc.password");
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());

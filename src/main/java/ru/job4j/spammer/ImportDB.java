@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ImportDB {
 
@@ -22,6 +24,17 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(u -> users.add(new User(u.substring(0, u.indexOf(";")), u.substring(u.indexOf(";") + 1, u.length() - 1))));
         }
+        for (User user : users) {
+            Pattern emailpattern
+                    = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            Matcher matcher = emailpattern.matcher(user.email);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException("email not found or wrong!");
+            } else if (user.name == null) {
+                throw new IllegalArgumentException("User Name not found");
+            }
+        }
         return users;
     }
 
@@ -37,9 +50,9 @@ public class ImportDB {
             try (Statement statement = cnt.createStatement()) {
                 statement.execute(new String("drop table users;"));
                 statement.execute(String.format("create table if not exists users(%s, %s, %s);",
-                         "id serial primary key",
-                         "name varchar(255)",
-                         "email varchar(255)"));
+                        "id serial primary key",
+                        "name varchar(255)",
+                        "email varchar(255)"));
             }
             for (User user : users) {
                 try (PreparedStatement ps = cnt.prepareStatement("insert into users(name, email) values (?, ?)")) {
@@ -50,6 +63,7 @@ public class ImportDB {
             }
         }
     }
+
 
     private static class User {
         String name;

@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ImportDB {
 
@@ -22,23 +20,18 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            rd.lines().forEach(u -> users.add(new User(u.substring(0, u.indexOf(";")), u.substring(u.indexOf(";") + 1, u.length() - 1))));
-        }
-        for (User user : users) {
-            Pattern emailpattern
-                    = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-            Matcher matcher = emailpattern.matcher(user.email);
-            if (!matcher.matches()) {
-                throw new IllegalArgumentException("email not found or wrong!");
-            } else if (user.name == null) {
-                throw new IllegalArgumentException("User Name not found");
-            }
+            rd.lines().forEach(u -> {
+                String[] spLine = u.split(";");
+                if (spLine.length != 2) {
+                    throw new IllegalArgumentException("Name or email not found!");
+                } else {
+                    users.add(new User(u.substring(0, u.indexOf(";")), u.substring(u.indexOf(";") + 1, u.length() - 1)));
+                }
+            });
+
         }
         return users;
     }
-
-
 
     public void save(List<User> users) throws Exception {
         Class.forName(cfg.getProperty("jdbc.driver"));

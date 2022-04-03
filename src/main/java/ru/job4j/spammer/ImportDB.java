@@ -22,7 +22,7 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(u -> {
                 String[] spLine = u.split(";");
-                if (spLine.length != 2) {
+                if (spLine.length != 2 || spLine[0].isBlank() || spLine[1].isBlank()) {
                     throw new IllegalArgumentException("Name or email not found!");
                 } else {
                     users.add(new User(u.substring(0, u.indexOf(";")), u.substring(u.indexOf(";") + 1, u.length() - 1)));
@@ -41,7 +41,7 @@ public class ImportDB {
                 cfg.getProperty("jdbc.password")
         )) {
             try (Statement statement = cnt.createStatement()) {
-                statement.execute(new String("drop table users;"));
+                statement.execute("drop table users;");
                 statement.execute(String.format("create table if not exists users(%s, %s, %s);",
                         "id serial primary key",
                         "name varchar(255)",

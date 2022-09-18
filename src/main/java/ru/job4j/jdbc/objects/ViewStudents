@@ -1,0 +1,9 @@
+create view show_how_much_books_have_students
+as select count(authors.name), students.name from students
+inner join orders
+on students.id = orders.student_id
+inner join books
+on orders.book_id = books.id
+inner join authors
+on books.author_id = authors.id
+group by students.name

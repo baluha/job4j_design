@@ -1,0 +1,16 @@
+create or replace function afterinsert()
+    returns trigger as
+$$
+    BEGIN
+        insert into history_of_price
+        values (new.name, new.price, CURRENT_DATE);
+        return new;
+    END;
+$$
+LANGUAGE 'plpgsql';
+
+create trigger insert_products
+    before insert
+    on products
+    for each row
+    execute procedure afterinsert();

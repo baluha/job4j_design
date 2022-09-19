@@ -2,7 +2,7 @@ create or replace function afterinsert()
     returns trigger as
 $$
     BEGIN
-        insert into history_of_price
+        insert into history_of_price(name, price, date)
         values (new.name, new.price, CURRENT_DATE);
         return new;
     END;

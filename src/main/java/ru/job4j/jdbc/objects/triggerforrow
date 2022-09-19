@@ -2,15 +2,13 @@ create or replace function tax_for_row()
     returns trigger as
 $$
     BEGIN
-        update products
-        set price = price + price * 0.13
-        where id = new.id;
+        new.price = new.price + new.price * 0.5;
         return new;
     END;
 $$
 LANGUAGE 'plpgsql';
 
-create trigger tax_tridder
+create trigger tax_trigger_row
     before insert
     on products
     for each row

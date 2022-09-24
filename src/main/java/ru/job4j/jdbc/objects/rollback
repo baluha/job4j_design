@@ -1,0 +1,66 @@
+newDB=# begin transaction;
+BEGIN
+newDB=*# select * from products;
+ id |   name    |  producer  | count | price
+----+-----------+------------+-------+-------
+ 19 | milk      | producer_3 |     8 |   203
+ 23 | product_3 | producer_3 |     8 |   195
+ 21 | product_3 | producer_3 |     8 |   200
+(3 ёЄЁюъш)
+
+
+newDB=*# savepoint first_savepoint;
+SAVEPOINT
+newDB=*# update products set count = 10 where id = 21;
+UPDATE 1
+newDB=*# insert into products (name, producer, count, price) values('canddy', 'candy_shop', 220, 10);
+INSERT 0 1
+newDB=*# select * from products;
+ id |   name    |  producer  | count | price
+----+-----------+------------+-------+-------
+ 19 | milk      | producer_3 |     8 |   203
+ 23 | product_3 | producer_3 |     8 |   195
+ 21 | product_3 | producer_3 |    10 |   200
+ 24 | canddy    | candy_shop |   220 |    17
+(4 ёЄЁюъш)
+
+
+newDB=*# savepoint second_savepoint;
+SAVEPOINT
+newDB=*# delete from products where id = 19;
+DELETE 1
+newDB=*# select * from products;
+ id |   name    |  producer  | count | price
+----+-----------+------------+-------+-------
+ 23 | product_3 | producer_3 |     8 |   195
+ 21 | product_3 | producer_3 |    10 |   200
+ 24 | canddy    | candy_shop |   220 |    17
+(3 ёЄЁюъш)
+
+
+newDB=*# rollback to second_savepoint;
+ROLLBACK
+newDB=*# select * from products;
+ id |   name    |  producer  | count | price
+----+-----------+------------+-------+-------
+ 19 | milk      | producer_3 |     8 |   203
+ 23 | product_3 | producer_3 |     8 |   195
+ 21 | product_3 | producer_3 |    10 |   200
+ 24 | canddy    | candy_shop |   220 |    17
+(4 ёЄЁюъш)
+
+
+newDB=*# delete from products where id = 19;
+DELETE 1
+newDB=*# rollback to first_savepoint;
+ROLLBACK
+newDB=*# select * from products;
+ id |   name    |  producer  | count | price
+----+-----------+------------+-------+-------
+ 19 | milk      | producer_3 |     8 |   203
+ 23 | product_3 | producer_3 |     8 |   195
+ 21 | product_3 | producer_3 |     8 |   200
+(3 ёЄЁюъш)
+
+
+newDB=*# rollback to second_savepoint;
